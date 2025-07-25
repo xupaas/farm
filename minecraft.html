@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Minecraft Farmları Rehberi</title>
+
+<!-- Minecraft Seven benzeri pixel font -->
+<style>
+  @font-face {
+    font-family: 'MinecraftSeven';
+    src: url('https://cdn.jsdelivr.net/gh/coliff/MinecraftSeven@latest/MinecraftSeven.ttf') format('truetype');
+  }
+</style>
+
+<style>
+  :root {
+    --bg-gradient-start: #1e1e1e;
+    --bg-gradient-end: #243b0d;
+    --nav-bg: #3a3a3a;
+    --nav-border: #2a7a1f;
+    --text-color: #e0e0e0;
+    --highlight: #b0f542;
+    --header-bg: #2a7a1f;
+    --header-shadow-dark: #162208;
+    --header-shadow-darker: #0a120b;
+    --table-header-bg: #4a7d0e;
+    --table-border-color: #6e9c33;
+    --tips-bg: rgba(52, 82, 29, 0.7);
+  }
+  .light-theme {
+    --bg-gradient-start: #e8f5e9;
+    --bg-gradient-end: #c8e6c9;
+    --nav-bg: #dcedc8;
+    --nav-border: #7cb342;
+    --text-color: #1b5e20;
+    --highlight: #4caf50;
+    --header-bg: #7cb342;
+    --header-shadow-dark: #558b2f;
+    --header-shadow-darker: #33691e;
+    --table-header-bg: #aed581;
+    --table-border-color: #81c784;
+    --tips-bg: rgba(165, 214, 167, 0.8);
+  }
+
+  body {
+    margin: 0; padding: 0;
+    font-family: 'MinecraftSeven', monospace, sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    color: var(--text-color);
+    overflow-x: hidden;
+    transition: background 0.8s ease, color 0.8s ease;
+  }
+  header {
+    background: var(--header-bg);
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 2.5rem;
+    color: #fff;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-shadow:
+      2px 2px 0 var(--header-shadow-dark),
+      4px 4px 0 var(--header-shadow-darker);
+    animation: titleAppear 1.5s ease forwards;
+    position: relative;
+  }
+  #theme-toggle {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--highlight);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #1a1a1a;
+    font-family: 'MinecraftSeven', monospace, sans-serif;
+    box-shadow: 0 0 10px var(--highlight);
+    transition: background 0.4s, color 0.4s;
+    user-select: none;
+  }
+  #theme-toggle:hover {
+    background: #a4d142;
+    color: #000;
+  }
+  @keyframes titleAppear {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px) scale(0.8);
+      filter: blur(3px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+  #container {
+    display: flex;
+    height: calc(100vh - 84px);
+    transition: background 0.8s ease;
+  }
+  nav {
+    background: var(--nav-bg);
+    width: 280px;
+    overflow-y: auto;
+    border-right: 5px solid var(--nav-border);
+    box-shadow: inset -5px 0 10px rgba(0,0,0,0.3);
+    transition: background 0.8s ease, border-color 0.8s ease;
+  }
+  nav ul {
+    list-style: none;
+    padding: 0; margin: 0;
+  }
+  nav li {
+    border-bottom: 1px solid #4a4a4a44;
+  }
+  nav button {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--highlight);
+    padding: 18px 24px;
+    font-size: 1.2rem;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background 0.4s,
+      color 0.3s,
+      box-shadow 0.3s;
+    position: relative;
+    font-weight: 700;
+    text-shadow: 1px 1px 0 var(--header-shadow-dark);
+  }
+  nav button::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: transparent;
+    border-radius: 50%;
+    box-shadow:
+      0 0 10px var(--highlight);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  nav button:hover,
+  nav button.active {
+    background: var(--nav-border);
+    color: #fff;
+    box-shadow: 0 0 15px var(--highlight);
+  }
+  nav button:hover::before,
+  nav button.active::before {
+    background: var(--highlight);
+    opacity: 1;
+  }
+  main {
+    flex-grow: 1;
+    padding: 3rem 3rem 3rem 4rem;
+    overflow-y: auto;
+    background: linear-gradient(to bottom, var(--bg-gradient-end), var(--bg-gradient-start));
+    box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.9);
+    position: relative;
+    transition: background 0.8s ease;
+  }
+  main h2 {
+    border-bottom: 4px solid var(--highlight);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 2.4rem;
+    text-shadow:
+      2px 2px 0 var(--header-shadow-dark),
+      4px 4px 0 var(--header-shadow-darker);
+    animation: fadeInSlideDown 1s ease forwards;
+  }
+  @keyframes fadeInSlideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 15px var(--highlight);
+    animation: fadeInSlideUp 1s ease forwards;
+    transition: box-shadow 0.8s ease;
+  }
+  th, td {
+    border: 1px solid var(--table-border-color);
+    padding: 0.7rem 1.2rem;
+    text-align: left;
+    color: var(--text-color);
+    transition: color 0.8s ease, border-color 0.8s ease;
+  }
+  th {
+    background: var(--table-header-bg);
+  }
+  @keyframes fadeInSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  img {
+    max-width: 100%;
+    border: 4px solid var(--nav-border);
+    border-radius: 10px;
+    margin-bottom: 1.8rem;
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+    box-shadow: 0 0 15px var(--highlight);
+  }
+  img:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 0 25px 5px var(--highlight);
+  }
+  a.video-link {
+    display: inline-block;
+    margin: 1rem 0 3rem 0;
+    background: var(--nav-border);
+    color: white;
+    padding: 0.8rem 1.6rem;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 1.1rem;
+    box-shadow: 0 0 12px var(--highlight);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s, box-shadow 0.4s;
+  }
+  a.video-link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -40%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.4), rgba(255,255,255,0));
+    transform: skewX(-25deg) translateX(0);
+    animation: shine 3s infinite;
+  }
+  @keyframes shine {
+    0% {
+      transform: skewX(-25deg) translateX(-100%);
+    }
+    100% {
+      transform: skewX(-25deg) translateX(200%);
+    }
+  }
+  a.video-link:hover {
+    background: #1f5e16;
+    box-shadow: 0 0 20px 5px var(--highlight);
+  }
+  .tips {
+    background: var(--tips-bg);
+    padding: 1.2rem 1.5rem;
+    border-left: 8px solid var(--highlight);
+    margin-top: 3rem;
+    font-style: italic;
+    font-size: 1.1rem;
+    box-shadow: 0 0 15px var(--highlight);
+    animation: tipsFade 2s ease forwards;
+    transition: background 0.8s ease, border-color 0.8s ease;
+  }
+  @keyframes tipsFade {
+    0% {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  ol {
+    padding-left: 1.4rem;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    transition: color 0.8s ease;
+  }
+  ol li {
+    margin-bottom: 0.9rem;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-gradient-start);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--table-border-color);
+    border-radius: 5px;
+  }
+  @media (max-width: 900px) {
+    #container {
+      flex-direction: column;
+      height: auto;
+    }
+    nav {
+      width: 100%;
+      height: 180px;
+      border-right: none;
+      border-bottom: 5px solid var(--nav-border);
+      box-shadow: inset 0 -5px 10px rgba(0,0,0,0.3);
+    }
+    main {
+      padding: 2rem 2rem 3rem 2rem;
+      height: auto;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  Minecraft Farmları Rehberi
+  <button id="theme-toggle" aria-label="Karanlık / Aydınlık tema değiştirici" title="Tema Değiştir">🌗</button>
+</header>
+<div id="container">
+  <nav>
+    <ul>
+      <li><button class="farm-btn active" data-farm="enderman">👾 Enderman Farmı</button></li>
+      <li><button class="farm-btn" data-farm="trading">🏘️ Köylü Trading Farmı</button></li>
+      <li><button class="farm-btn" data-farm="mob-kafes">🏰 Kafesli Mob Farmı</button></li>
+      <li><button class="farm-btn" data-farm="bugday">🌾 Buğday Farmı</button></li>
+      <li><button class="farm-btn" data-farm="kaktus">🌵 Kaktüs Farmı</button></li>
+      <li><button class="farm-btn" data-farm="balikci">🐟 Balıkçı Farmı</button></li>
+      <li><button class="farm-btn" data-farm="mantar">🍄 Mantar Farmı</button></li>
+      <li><button class="farm-btn" data-farm="demir-golem">🤖 Demir Golem Farmı</button></li>
+      <li><button class="farm-btn" data-farm="altin">🪙 Altın Farmı (Nether)</button></li>
+      <li><button class="farm-btn" data-farm="slime">🟢 Slime Farmı</button></li>
+      <li><button class="farm-btn" data-farm="bali">🐝 Bal / Balmumu Farmı</button></li>
+      <li><button class="farm-btn" data-farm="mantar-2">🍄 Nadir Mantar Farmı</button></li>
+    </ul>
+  </nav>
+  <main id="content" aria-live="polite" aria-atomic="true" tabindex="0">
+    <!-- İçerik JS ile yükleniyor -->
+  </main>
+</div>
+
+<script>
+  // Tema değişimi ve localStorage kaydı
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  const bodyEl = document.body;
+
+  function applyTheme(theme) {
+    if(theme === 'light') {
+      bodyEl.classList.add('light-theme');
+      themeToggleBtn.textContent = '🌙';
+      localStorage.setItem('minecraftTheme', 'light');
+    } else {
+      bodyEl.classList.remove('light-theme');
+      themeToggleBtn.textContent = '🌗';
+      localStorage.setItem('minecraftTheme', 'dark');
+    }
+  }
+
+  themeToggleBtn.addEventListener('click', () => {
+    if(bodyEl.classList.contains('light-theme')) {
+      applyTheme('dark');
+    } else {
+      applyTheme('light');
+    }
+  });
+
+  // Sayfa yüklenince tema tercihini uygula
+  const savedTheme = localStorage.getItem('minecraftTheme') || 'dark';
+  applyTheme(savedTheme);
+
+  // Farm içerikleri
+  const farms = {
+    "enderman": {
+      title: "👾 Enderman Farmı – Ender İnci ve XP Kaynağı",
+      img: "https://i.imgur.com/AJNY2Ht.png",
+      intro: "Endermanlar, ender inci ve yüksek miktarda deneyim (XP) verir. Enderman farmı, ender inci ihtiyacını hızlı ve güvenilir şekilde karşılar.",
+      materials: [
+        ["Ender pearl spawn bölgesi (End biyomu)", "Gereklidir"],
+        ["Blok (obsidyen veya taş)", "200+"],
+        ["Gözlemci ve piston (opsiyonel)", "Opsiyonel"],
+        ["Huni + Sandık", "2+ set"],
+        ["Işık kaynağı (diğer mob spawn engelleme)", "20+"],
+        ["Elytra veya platform", "Tavsiye edilir"]
+      ],
+      steps: [
+        "End biyomunda 128 blok yükseklikten başlamak üzere geniş, yüksek platformlar kur.",
+        "Platformlar arası mesafeyi 3 blok tutarak enderman spawnını optimize et.",
+        "Spawn dışındaki alanları maksimum ışıklandırarak diğer mob spawnlarını engelle.",
+        "Golem veya tuzak sistemi ile endermanları bir merkezde topla ve öldür.",
+        "Huni ve sandıklarla düşen ender incilerini topla."
+      ],
+      video: "https://www.youtube.com/watch?v=zJzRzRKPiC4",
+      tips: "Obsidyen veya blast resistant bloklar kullan. Elytra ile iniş-çıkış spawn hızını artırır. Çevreyi iyi ışıklandır, otomatik öldürme mekanizmalarını kırmızı taşla yap."
+    },
+    "trading": {
+      title: "🏘️ Köylü Trading Farmı – Kaynak ve Eşya Ticareti",
+      img: "https://i.imgur.com/6VRKAwM.png",
+      intro: "Köylü trading farmı, köylülerle ticaret yaparak kaynak, eşya ve nadir materyaller elde etmeye yarar.",
+      materials: [
+        ["Köylüler (4+)", "4+"],
+        ["Yatak", "Köylü başına 1"],
+        ["İş istasyonları (Fırın, Tezgah vb.)", "Köylü sayısı kadar"],
+        ["Bloklar", "100+"],
+        ["Huni + Sandık", "1+ set"],
+        ["Korumalı alan (mob engelleme)", "1"]
+      ],
+      steps: [
+        "Köylüleri güvenli bir alanda tut ve iş istasyonları yerleştir.",
+        "Köylülerin işlerini yapmaları için gerekli koşulları sağla.",
+        "Ticaret için her köylüyle etkileşimde bulun ve en iyi teklifleri yakala.",
+        "Ganimetler hunilerle otomatik toplanabilir."
+      ],
+      video: "https://www.youtube.com/watch?v=u5nQxX_9ktw",
+      tips: "Köylülerin işlerini değiştirmeleri için iş istasyonlarını yenile. Trading için ışıklandırma ve mob koruması önemli."
+    },
+    "mob-kafes": {
+      title: "🏰 Kafesli Mob Farmı – Genel Mob Düşürme ve XP",
+      img: "https://i.imgur.com/7R2TAy5.png",
+      intro: "Kafesli mob farmı, çeşitli mobların spawn olacağı ve otomatik öldürülerek eşyalarının toplanacağı bir yapıdır.",
+      materials: [
+        ["Blok (taş, obsidyen vb.)", "200+"],
+        ["Işık kaynakları", "20+"],
+        ["Huni ve sandık", "4+ set"],
+        ["Redstone mekanizmaları", "Opsiyonel"],
+        ["Mob kafesi (mob spawn platformları)", "1+"]
+      ],
+      steps: [
+        "Geniş ve karanlık spawn alanları oluştur.",
+        "Spawnları arttırmak için platformlar arasında boşluk bırak.",
+        "Mobları toplayan ve öldüren otomatik sistemler kur.",
+        "Düşen eşyaları hunilerle topla."
+      ],
+      video: "https://www.youtube.com/watch?v=GeHcsqZKsLg",
+      tips: "Mob spawn hızını artırmak için çevreyi iyi ışıklandır ve gereksiz mob spawnlarını engelle."
+    },
+    "bugday": {
+      title: "🌾 Buğday Farmı – Temel Gıda Kaynağı",
+      img: "https://i.imgur.com/uyXJPlz.png",
+      intro: "Buğday farmı, temel gıda kaynağı olan buğdayı otomatik veya yarı otomatik olarak üretir.",
+      materials: [
+        ["Toprak blokları", "50+"],
+        ["Su kaynağı", "1 blok su kanalına yakın"],
+        ["Elytra veya piston (opsiyonel)", "Opsiyonel"],
+        ["Huni ve sandık", "1 set"],
+        ["Işık kaynağı", "10+"]
+      ],
+      steps: [
+        "Toprağı suyun 4 blok çevresine yakın olacak şekilde düzenle.",
+        "Buğday tohumlarını ek ve ışıklandır.",
+        "Otomatik toplama için piston ve hunileri kullan.",
+        "Toplanan buğdayları sandıklara aktar."
+      ],
+      video: "https://www.youtube.com/watch?v=8QFvsm9vXyo",
+      tips: "Işık seviyesini 9’un üstünde tut, otomatik sistemler için piston kullanımını öğren."
+    },
+    "kaktus": {
+      title: "🌵 Kaktüs Farmı – Kolay ve Otomatik Toplama",
+      img: "https://i.imgur.com/6HdP1np.png",
+      intro: "Kaktüs farmı, otomatik kaktüs hasadı sağlar, kolay kurulumu ve etkinliği ile popülerdir.",
+      materials: [
+        ["Kaktüs tohumları", "30+"],
+        ["Blok (kum veya toprak)", "60+"],
+        ["Piston ve redstone", "10+"],
+        ["Huni ve sandık", "1 set"],
+        ["Işık kaynağı", "5+"]
+      ],
+      steps: [
+        "Kaktüsleri 1 blok aralıklı diz.",
+        "Piston ve redstone ile otomatik kırma mekanizması kur.",
+        "Düşen kaktüsleri hunilerle topla.",
+        "Çevreyi ışıklandırarak spawn engelle."
+      ],
+      video: "https://www.youtube.com/watch?v=MpOjPLmUyeE",
+      tips: "Kaktüsleri bitişik bloklara koyma, kırılır. Otomatik sistemlerde piston senkronizasyonuna dikkat et."
+    },
+    "balikci": {
+      title: "🐟 Balıkçı Farmı – Sürekli Balık ve Hazine",
+      img: "https://i.imgur.com/eQEiQ95.png",
+      intro: "Balıkçı farmı, otomatik balık tutma için kullanılır, nadir eşyalar ve balık sağlar.",
+      materials: [
+        ["Otomatik balık tutma mekanizması", "1 set"],
+        ["Huni ve sandık", "1 set"],
+        ["Küçük su havuzu", "1"],
+        ["Işıklandırma", "3+"]
+      ],
+      steps: [
+        "Balıkçılık mekanizmasını kur, balık oltasını mekanik olarak kullan.",
+        "Huni ve sandıklarla ganimet topla.",
+        "Işıklandırma ile alanı aydınlat."
+      ],
+      video: "https://www.youtube.com/watch?v=EGhOj_DWMog",
+      tips: "Mekanik balıkçılık için basit redstone bilgisi gerekir. Balık tutma süresi oyundaki balık türünü etkiler."
+    },
+    "mantar": {
+      title: "🍄 Mantar Farmı – Nadir Mantar Toplama",
+      img: "https://i.imgur.com/qWlDbZK.png",
+      intro: "Mantar farmı, koyu alanlarda mantar üretimi için yapılır.",
+      materials: [
+        ["Koyu bloklar (kömür taşı, obsidyen vb.)", "50+"],
+        ["Mantarlar", "10+"],
+        ["Işık engelleyici bloklar", "5+"],
+        ["Huni ve sandık", "1 set"]
+      ],
+      steps: [
+        "Mantarları koyu alanda büyütmek için karanlık bir oda oluştur.",
+        "Mantarları çoğaltmak için gerekli alanı sağla.",
+        "Düşen mantarları hunilerle topla."
+      ],
+      video: "https://www.youtube.com/watch?v=r1xUy-U9raM",
+      tips: "Mantarların büyümesi için ışık seviyesi 12’nin altında olmalı."
+    },
+    "demir-golem": {
+      title: "🤖 Demir Golem Farmı – Demir ve XP Kaynağı",
+      img: "https://i.imgur.com/JgTSGic.png",
+      intro: "Demir Golem farmı, demir cevheri üretmek için demir golem spawn mekanizması kurar.",
+      materials: [
+        ["Köylüler (3+)", "3+"],
+        ["Yatak", "3"],
+        ["Kırmızı taş mekanizması", "Opsiyonel"],
+        ["Bloklar (taş, obsidyen vb.)", "100+"],
+        ["Huni ve sandık", "2 set"]
+      ],
+      steps: [
+        "Köylü ve yatak düzenlemesi yap.",
+        "Demir golem spawn platformları oluştur.",
+        "Demir golem düşürme ve toplama mekanizması kur.",
+        "Düşen demirleri hunilerle topla."
+      ],
+      video: "https://www.youtube.com/watch?v=lTnM8TZtCr8",
+      tips: "Köylü sayısını doğru ayarla, spawn alanını iyi planla."
+    },
+    "altin": {
+      title: "🪙 Altın Farmı (Nether) – Gold Ingot ve Zombi Pigman Kaynağı",
+      img: "https://i.imgur.com/18Rxpm0.png",
+      intro: "Nether altın farmı, zombi pigman spawn edip altın düşürür.",
+      materials: [
+        ["Bloklar (obsidyen, taş vb.)", "200+"],
+        ["Redstone mekanizması", "Opsiyonel"],
+        ["Huni ve sandık", "2 set"],
+        ["Işıklandırma", "20+"]
+      ],
+      steps: [
+        "Nether ortamında yüksek platform oluştur.",
+        "Pigman spawn alanları hazırla ve mobları topla.",
+        "Düşen altınları hunilerle topla."
+      ],
+      video: "https://www.youtube.com/watch?v=HuS9hduKBYQ",
+      tips: "Nether ortamının tehlikesine karşı dikkatli ol."
+    },
+    "slime": {
+      title: "🟢 Slime Farmı – Slime Topu Kaynağı",
+      img: "https://i.imgur.com/E1Qx8im.png",
+      intro: "Slime farmı, slime toplarını toplamak için kullanılır.",
+      materials: [
+        ["Slime chunk alanı", "Gereklidir"],
+        ["Bloklar (taş vb.)", "100+"],
+        ["Huni ve sandık", "2 set"],
+        ["Işıklandırma", "20+"]
+      ],
+      steps: [
+        "Slime chunk içinde spawn alanları oluştur.",
+        "Slime mobları tuzaklarla topla ve öldür.",
+        "Düşen slime toplarını hunilerle topla."
+      ],
+      video: "https://www.youtube.com/watch?v=PUkqFCiqOLQ",
+      tips: "Chunk sınırlarını iyi belirle, mob spawn hızını artır."
+    },
+    "bali": {
+      title: "🐝 Bal / Balmumu Farmı – Arıcılık ve Kaynak",
+      img: "https://i.imgur.com/4REX2nu.png",
+      intro: "Bal farmı, arıcılık ve bal üretimi için yapılır.",
+      materials: [
+        ["Arı kovanları", "5+"],
+        ["Çiçekler", "10+"],
+        ["Huni ve sandık", "1 set"],
+        ["Işıklandırma", "10+"]
+      ],
+      steps: [
+        "Arı kovanlarını düzenle.",
+        "Çiçeklerle arıların üretimini destekle.",
+        "Bal ve balmumlarını hunilerle topla."
+      ],
+      video: "https://www.youtube.com/watch?v=xZ4-QHWlLX8",
+      tips: "Arıların rahatça uçabileceği alan bırak, kovanları çok sık yerleştirme."
+    },
+    "mantar-2": {
+      title: "🍄 Nadir Mantar Farmı – Kırmızı ve Kahverengi Mantarlardan Verim",
+      img: "https://i.imgur.com/gkgpkKe.png",
+      intro: "Nadir mantar farmı, koyu ortamda kırmızı ve kahverengi mantar üretimi yapar.",
+      materials: [
+        ["Mantarlar (kırmızı, kahverengi)", "10+"],
+        ["Koyu ortam oluşturacak bloklar", "50+"],
+        ["Huni ve sandık", "1 set"],
+        ["Işık engelleyici bloklar", "5+"]
+      ],
+      steps: [
+        "Düşük ışık seviyesinde mantarları çoğaltacak ortam yarat.",
+        "Mantarları çoğalt ve otomatik topla.",
+        "Mantarları hunilerle depola."
+      ],
+      video: "https://www.youtube.com/watch?v=4jHhoFe8IYg",
+      tips: "Işık seviyesini düşük tut, mantarların verimini artır."
+    }
+  };
+
+  const buttons = document.querySelectorAll('.farm-btn');
+  const content = document.getElementById('content');
+
+  function loadFarm(farmKey) {
+    const farm = farms[farmKey];
+    if(!farm) return;
+
+    content.style.opacity = 0;
+    setTimeout(() => {
+      content.innerHTML = `
+        <h2>${farm.title}</h2>
+        <img src="${farm.img}" alt="${farm.title} görseli" loading="lazy" />
+        <p>${farm.intro}</p>
+        <h3>Malzemeler</h3>
+        <table>
+          <thead><tr><th>Malzeme</th><th>Miktar</th></tr></thead>
+          <tbody>
+            ${farm.materials.map(m => `<tr><td>${m[0]}</td><td>${m[1]}</td></tr>`).join('')}
+          </tbody>
+        </table>
+        <h3>Kurulum Aşamaları</h3>
+        <ol>
+          ${farm.steps.map(s => `<li>${s}</li>`).join('')}
+        </ol>
+        <a class="video-link" href="${farm.video}" target="_blank" rel="noopener noreferrer" aria-label="${farm.title} video rehberi">${farm.title} video rehberi</a>
+        <div class="tips" tabindex="0"><strong>İpuçları:</strong> ${farm.tips}</div>
+      `;
+      content.style.opacity = 1;
+      content.focus();
+    }, 350);
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      loadFarm(btn.dataset.farm);
+    });
+  });
+
+  // Sayfa açılır açılmaz ilk farmı yükle
+  loadFarm('enderman');
+</script>
+</body>
+</html>
